@@ -21,6 +21,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+/**
+ * collect a batch of files formats results, group by {@code FormatResult}
+ */
 public class FormatResults {
 
     private final Set<String> unchanged = new ConcurrentSkipListSet<>();
@@ -29,26 +32,57 @@ public class FormatResults {
 
     private final Map<String, String> failed = new ConcurrentHashMap<>();
 
+    /**
+     * add file to {@code FormatResult.UNCHANGED} group
+     *
+     * @param fileName file name
+     */
     public void addUnchangedFile(String fileName) {
         unchanged.add(fileName);
     }
 
+    /**
+     * add file to {@code FormatResult.SUCCEED} group
+     *
+     * @param fileName file name
+     */
     public void addSucceed(String fileName) {
         succeed.add(fileName);
     }
 
+    /**
+     * add file to {@code FormatResult.FAILED} group
+     *
+     * @param fileName file name
+     * @param reason   format failed reason
+     */
     public void addFailed(String fileName, String reason) {
         failed.put(fileName, reason);
     }
 
+    /**
+     * get unchanged file collection
+     *
+     * @return Set of String, file names
+     */
     public Set<String> getUnchanged() {
         return unchanged;
     }
 
+    /**
+     * get success formatted file collection
+     *
+     * @return Set of String, file names
+     */
     public Set<String> getSucceed() {
         return succeed;
     }
 
+    /**
+     * get format failed file collection
+     *
+     * @return Map of String to string, file name to failed reason
+     */
     public Map<String, String> getFailed() {
         return failed;
     }

@@ -34,6 +34,9 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
 
+/**
+ * Java code format gradle plugin implementation
+ */
 public class JavaFormatterPlugin implements Plugin<Project> {
 
     private static final String JAVA_FILE_SUFFIX = ".java";
@@ -56,6 +59,11 @@ public class JavaFormatterPlugin implements Plugin<Project> {
 
     private boolean confLoaded;
 
+    /**
+     * implement gradle org.gradle.api.Plugin interface, apply this plugin, register tasks
+     *
+     * @param project the gradle project
+     */
     @Override
     public void apply(Project project) {
         formatterConf = project.getExtensions().create("formatter", PluginExtension.class);

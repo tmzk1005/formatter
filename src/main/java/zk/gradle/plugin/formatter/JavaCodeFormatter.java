@@ -40,6 +40,9 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
+/**
+ * java source code format implementation, based on eclipse formatter
+ */
 public class JavaCodeFormatter {
 
     private CodeFormatter codeFormatter;
@@ -48,6 +51,9 @@ public class JavaCodeFormatter {
 
     private DefaultCodeFormatterOptions codeFormatterOptions;
 
+    /**
+     * create an Instance with default configuration
+     */
     public JavaCodeFormatter() {
         initOptions();
         codeFormatter = ToolFactory.createCodeFormatter(codeFormatterOptions.getMap(), ToolFactory.M_FORMAT_EXISTING);
@@ -82,6 +88,11 @@ public class JavaCodeFormatter {
         codeFormatterOptions.parenthesis_positions_in_lambda_declaration = DefaultCodeFormatterConstants.SEPARATE_LINES_IF_WRAPPED;
     }
 
+    /**
+     * configure format options
+     *
+     * @param options format options
+     */
     public void setOptions(Map<String, String> options) {
         String settingIdPrefix = "org.eclipse.jdt.core.formatter.";
         Map<String, String> finalOptions = new HashMap<>(options.size());
@@ -90,14 +101,35 @@ public class JavaCodeFormatter {
         codeFormatter = ToolFactory.createCodeFormatter(codeFormatterOptions.getMap(), ToolFactory.M_FORMAT_EXISTING);
     }
 
+    /**
+     * configure import lines order
+     *
+     * @param importOrder import lines order
+     */
     public void setImportOrder(List<String> importOrder) {
         this.importsSorter.setImportOrder(importOrder);
     }
 
+    /**
+     * format a java source code file, specified by a ${@code Path}
+     *
+     * @param path   java source code file path
+     * @param dryRun boolean, set if just dry run, if true, only try to format and
+     *               get format result.
+     * @return format result
+     */
     public FormatResult formatFile(Path path, boolean dryRun) {
         return formatFile(path.toFile(), dryRun);
     }
 
+    /**
+     * format a java source code file, specified by a ${@code File}
+     *
+     * @param file   java source code file
+     * @param dryRun boolean, set if just dry run, if true, only try to format and
+     *               get format result.
+     * @return format result
+     */
     public FormatResult formatFile(File file, boolean dryRun) {
         try {
             return doFormat(file, dryRun);
@@ -127,6 +159,12 @@ public class JavaCodeFormatter {
         return originalCode.equals(importSortedCode) ? FormatResult.UNCHANGED : FormatResult.SUCCEED;
     }
 
+    /**
+     * write a format options to a xml file
+     *
+     * @param filePath xml file path
+     * @throws IOException IOException
+     */
     public void writeOptionsToXml(Path filePath) throws IOException {
         Map<String, String> options = codeFormatterOptions.getMap();
         org.dom4j.Document document = DocumentHelper.createDocument();
@@ -147,6 +185,12 @@ public class JavaCodeFormatter {
         xmlWriter.close();
     }
 
+    /**
+     * write a import order configuration to a property file
+     *
+     * @param filePath property file path
+     * @throws IOException IOException
+     */
     public void writeImportOrderFile(Path filePath) throws IOException {
         Path parent = filePath.getParent();
         if (Files.notExists(parent)) {

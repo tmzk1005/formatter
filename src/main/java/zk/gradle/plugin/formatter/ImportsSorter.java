@@ -23,29 +23,51 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Util class to sort import lines of java source code file
+ */
 public class ImportsSorter {
 
-    public static final String KEYWORD_IMPORT_PREFIX = "import ";
+    private static final String KEYWORD_IMPORT_PREFIX = "import ";
 
-    public static final String PREFIX_STATIC = KEYWORD_IMPORT_PREFIX
-            + "static ";
+    private static final String PREFIX_STATIC = KEYWORD_IMPORT_PREFIX + "static ";
 
-    public static final String LINE_SEP = "\n";
+    private static final String LINE_SEP = "\n";
 
     private List<String> importOrder;
 
+    /**
+     * create ImportsSorter instance with specified configuration
+     *
+     * @param importOrder List of unduplicated strings of package name prefix, blank "" means
+     *                    others, and "#" means all static imports.
+     */
     public ImportsSorter(List<String> importOrder) {
         this.importOrder = importOrder;
     }
 
+    /**
+     * create ImportsSorter instance with default configuration
+     */
     public ImportsSorter() {
         this(new ArrayList<>(1));
     }
 
+    /**
+     * set import order configuration
+     *
+     * @param importOrder List of unduplicated strings of package name prefix, blank "" means
+     *                    others, and "#" means all static imports.
+     */
     public void setImportOrder(List<String> importOrder) {
         this.importOrder = importOrder;
     }
 
+    /**
+     * generate content for a java.importorder file
+     *
+     * @return content for a java.importorder file
+     */
     public String getImportOrderFileContent() {
         if (Objects.isNull(importOrder) || importOrder.isEmpty()) {
             return "0=";
@@ -60,6 +82,12 @@ public class ImportsSorter {
         return sb.toString();
     }
 
+    /**
+     * sort import lines of java source code
+     *
+     * @param formattedCode java source code, as a string
+     * @return formatted java source code, with import lines sorted, as a string
+     */
     public String sortImportsInFormattedCode(String formattedCode) {
         // 已经经过格式化后的代码, import语句肯定全部集中在一起,中间不会夹杂其他代码或者注释
         // 在import代码块之前,也不会有多行模式的注释的中间行是以import开头的

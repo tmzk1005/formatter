@@ -16,19 +16,44 @@
 
 package zk.gradle.plugin.formatter;
 
+/**
+ * file format result type
+ */
 public enum FormatResult {
 
+    /**
+     * file was pretty formatted already, so unchanged while format it.
+     */
     UNCHANGED,
+
+    /**
+     * file wat not pretty formatted, and it is changed while format it, success.
+     */
     SUCCEED,
+
+    /**
+     * failed to format, maybe exception happened
+     */
     FAILED;
 
     private String message;
 
+    /**
+     * Set message to describe format result
+     *
+     * @param message to describe format result
+     * @return this
+     */
     public FormatResult withMessage(String message) {
         this.message = message;
         return this;
     }
 
+    /**
+     * Get message describe format result
+     *
+     * @return String message describe format result
+     */
     public String getMessage() {
         return message;
     }

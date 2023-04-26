@@ -20,12 +20,30 @@ import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 
+/**
+ * Plugin configuration
+ */
 public interface PluginExtension {
 
+    /**
+     * get the directory to save generated java-format.xml and java.importorder
+     *
+     * @return the directory to save generated java-format.xml and java.importorder
+     */
     Property<String> getQaDir();
 
+    /**
+     * get import order configuration
+     *
+     * @return import order configuration, as list of string
+     */
     ListProperty<String> getImportOrder();
 
+    /**
+     * get java code format options
+     * 
+     * @return java code format options, as string to string map
+     */
     MapProperty<String, String> getFmtOptions();
 
 }

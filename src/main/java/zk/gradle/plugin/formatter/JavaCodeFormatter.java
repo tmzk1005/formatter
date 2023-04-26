@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +42,7 @@ import org.eclipse.text.edits.TextEdit;
 
 public class JavaCodeFormatter {
 
-    private final CodeFormatter codeFormatter;
+    private CodeFormatter codeFormatter;
 
     private final ImportsSorter importsSorter;
 
@@ -82,7 +83,11 @@ public class JavaCodeFormatter {
     }
 
     public void setOptions(Map<String, String> options) {
-        codeFormatterOptions.set(options);
+        String settingIdPrefix = "org.eclipse.jdt.core.formatter.";
+        Map<String, String> finalOptions = new HashMap<>(options.size());
+        options.forEach((key, value) -> finalOptions.put(settingIdPrefix + key, value));
+        codeFormatterOptions.set(finalOptions);
+        codeFormatter = ToolFactory.createCodeFormatter(codeFormatterOptions.getMap(), ToolFactory.M_FORMAT_EXISTING);
     }
 
     public void setImportOrder(List<String> importOrder) {
@@ -101,10 +106,10 @@ public class JavaCodeFormatter {
         }
     }
 
-    private FormatResult doFormat(File file, boolean dryRun) throws IOException, BadLocationException {
+    private FormatResult doFormat(File file, boolean dryRun)
+            throws IOException, BadLocationException {
         String originalCode = new String(Util.getFileCharContent(file, "\n"));
-        int kind = (file.getName().equals(IModule.MODULE_INFO_JAVA) ? CodeFormatter.K_MODULE_INFO
-                : CodeFormatter.K_COMPILATION_UNIT) | CodeFormatter.F_INCLUDE_COMMENTS;
+        int kind = (file.getName().equals(IModule.MODULE_INFO_JAVA) ? CodeFormatter.K_MODULE_INFO : CodeFormatter.K_COMPILATION_UNIT) | CodeFormatter.F_INCLUDE_COMMENTS;
         TextEdit textEdit = this.codeFormatter.format(kind, originalCode, 0, originalCode.length(), 0, "\n");
         if (Objects.isNull(textEdit)) {
             return FormatResult.FAILED;

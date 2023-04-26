@@ -55,10 +55,10 @@ formatter {
 
     importOrder = ["java", "javax", "org.springframework", "", "#"]
 
-    fmtOptions {
-        tab_size = "4"
-        page_width = "160"
-    }
+    fmtOptions [
+            "lineSplit": "160",
+            "tabulation.size": "4",
+    ]
 
 }
 ```
@@ -80,7 +80,7 @@ default values is `["java", "javax", "", "#"]`
 ### fmtOptions
 
 `fmtOptions` is string to string Map (some values is number type, but still config as string). 
-There are hundreds of option to set every details, run gradle task `fmtCreateRulesFile` to see
+There are hundreds of options, run gradle task `fmtCreateRulesFile` to see
 all the options and value in the generated xml file `java-format.xml`, 
 option name is the setting id without prefix "org.eclipse.jdt.core.formatter.".
 

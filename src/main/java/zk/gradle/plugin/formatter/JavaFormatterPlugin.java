@@ -100,7 +100,8 @@ public class JavaFormatterPlugin implements Plugin<Project> {
 
     private void registerTaskCreateRuleFile(Project project) {
         Project rootProject = project.getRootProject();
-        Set<Task> tasksByName = rootProject.getTasksByName(TASK_CREATE_RULES_FILE, false);
+        Set<Task> tasksByName = rootProject
+                .getTasksByName(TASK_CREATE_RULES_FILE, false);
         if (tasksByName.isEmpty()) {
             rootProject.task(TASK_CREATE_RULES_FILE).doLast(task -> {
                 loadConf();
@@ -140,7 +141,9 @@ public class JavaFormatterPlugin implements Plugin<Project> {
         final Set<Path> javaFiles = new HashSet<>();
         Files.walkFileTree(path, new SimpleFileVisitor<>() {
             @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            public FileVisitResult visitFile(
+                    Path file, BasicFileAttributes attrs
+            ) throws IOException {
                 Objects.requireNonNull(file);
                 Objects.requireNonNull(attrs);
                 if (file.getFileName().toString().endsWith(JAVA_FILE_SUFFIX)) {
@@ -179,11 +182,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
         }
         if (!formatResults.getSucceed().isEmpty()) {
             String fileListStr = String.join("\n", formatResults.getSucceed());
-            logger.lifecycle(
-                    "{} files formatted: \n{}",
-                    formatResults.getSucceed().size(),
-                    fileListStr
-            );
+            logger.lifecycle("{} files formatted: \n{}", formatResults.getSucceed().size(), fileListStr);
         }
         if (!formatResults.getFailed().isEmpty()) {
             for (Map.Entry<String, String> entry : formatResults.getFailed().entrySet()) {

@@ -93,6 +93,10 @@ def applySelf(String mainClass) {
 
     formatter {
         importOrder = ["java", "javax", "", "#"]
+        fmtOptions = [
+                "lineSplit": "200",
+                "tabulation.size": "4",
+        ]
     }
 
     project.tasks.named("compileJava") {

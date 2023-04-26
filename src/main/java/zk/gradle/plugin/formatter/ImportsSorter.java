@@ -27,7 +27,8 @@ public class ImportsSorter {
 
     public static final String KEYWORD_IMPORT_PREFIX = "import ";
 
-    public static final String PREFIX_STATIC = KEYWORD_IMPORT_PREFIX + "static ";
+    public static final String PREFIX_STATIC = KEYWORD_IMPORT_PREFIX
+            + "static ";
 
     public static final String LINE_SEP = "\n";
 
@@ -66,7 +67,8 @@ public class ImportsSorter {
         if (formattedCode.startsWith(KEYWORD_IMPORT_PREFIX)) {
             importPartStart = 0;
         } else {
-            importPartStart = formattedCode.indexOf(LINE_SEP + KEYWORD_IMPORT_PREFIX);
+            importPartStart = formattedCode
+                    .indexOf(LINE_SEP + KEYWORD_IMPORT_PREFIX);
         }
         if (importPartStart == -1) {
             // No imports
@@ -75,7 +77,8 @@ public class ImportsSorter {
             // 第一个字符是换行，不要
             ++importPartStart;
         }
-        int importPartEnd = formattedCode.lastIndexOf(LINE_SEP + KEYWORD_IMPORT_PREFIX)
+        int importPartEnd = formattedCode
+                .lastIndexOf(LINE_SEP + KEYWORD_IMPORT_PREFIX)
                 + LINE_SEP.length()
                 + KEYWORD_IMPORT_PREFIX.length();
         while (formattedCode.charAt(importPartEnd) != '\n') {
@@ -83,11 +86,16 @@ public class ImportsSorter {
         }
         // 最后一个字符是换行，不要
         --importPartEnd;
-        String importPart = formattedCode.substring(importPartStart, importPartEnd);
-        String codeBeforeImport = importPartStart == 0 ? "" : formattedCode.substring(0, importPartStart);
-        String codeAfterImport = formattedCode.substring(importPartEnd);
-        String orderedImportLines = new SortContext(importPart).sort();
-        return codeBeforeImport + orderedImportLines + codeAfterImport;
+        String importPart = formattedCode
+                .substring(importPartStart, importPartEnd);
+        String codeBeforeImport = importPartStart == 0 ? ""
+                : formattedCode.substring(0, importPartStart);
+        String codeAfterImport = formattedCode
+                .substring(importPartEnd);
+        String orderedImportLines = new SortContext(importPart)
+                .sort();
+        return codeBeforeImport + orderedImportLines
+                + codeAfterImport;
     }
 
     class SortContext {
@@ -104,7 +112,9 @@ public class ImportsSorter {
 
         SortContext(String rawImportPart) {
             this.rawImportPart = rawImportPart;
-            this.selfOrderedImportOrder = new ArrayList<>(importOrder.size());
+            this.selfOrderedImportOrder = new ArrayList<>(
+                    importOrder.size()
+            );
             this.groups = new HashMap<>(importOrder.size());
             for (String key : importOrder) {
                 if (key.equals("")) {
@@ -112,7 +122,8 @@ public class ImportsSorter {
                 } else if (key.equals("#")) {
                     groups.put(KEY_STATIC, new ArrayList<>());
                 } else {
-                    String keyWithPrefix = KEYWORD_IMPORT_PREFIX + key;
+                    String keyWithPrefix = KEYWORD_IMPORT_PREFIX
+                            + key;
                     groups.put(keyWithPrefix, new ArrayList<>());
                     selfOrderedImportOrder.add(keyWithPrefix);
                 }
@@ -160,7 +171,8 @@ public class ImportsSorter {
                 } else if (key.equals("#")) {
                     group = groups.get(KEY_STATIC);
                 } else {
-                    String keyWithPrefix = KEYWORD_IMPORT_PREFIX + key;
+                    String keyWithPrefix = KEYWORD_IMPORT_PREFIX
+                            + key;
                     group = groups.get(keyWithPrefix);
                 }
 
@@ -179,7 +191,8 @@ public class ImportsSorter {
 
     private static int importLineCompare(String line1, String line2) {
         // 去掉末尾的分号再比较
-        return line1.substring(0, line1.length() - 1).compareTo(line2.substring(0, line2.length() - 1));
+        return line1.substring(0, line1.length() - 1)
+                .compareTo(line2.substring(0, line2.length() - 1));
     }
 
 }

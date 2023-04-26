@@ -6,5 +6,3 @@ pluginManagement {
     }
 }
 rootProject.name = "formatter"
-
-println("settings gradle run..")

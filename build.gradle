@@ -1,5 +1,3 @@
-import java.nio.file.Files
-
 /*
  * Copyright 2023 zoukang, All Rights Reserved.
  *
@@ -15,6 +13,8 @@ import java.nio.file.Files
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import java.nio.file.Files
 
 plugins {
     id 'java-gradle-plugin'

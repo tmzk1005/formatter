@@ -17,7 +17,7 @@
 import java.nio.file.Files
 
 plugins {
-    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version "1.2.0"
     id 'checkstyle'
     id 'pmd'
     id 'maven-publish'
@@ -54,8 +54,15 @@ gradlePlugin {
         formatterPlugin {
             id = "${group}.java-formatter"
             implementationClass = 'zk.gradle.plugin.formatter.JavaFormatterPlugin'
+            displayName = "java-code-formatter-gradle-plugin"
+            description = "This plugin provides a mechanism to automatically (re)format your Gradle project " +
+                    "during a Gradle build, or to verify its formatting, so that your project can converge " +
+                    "on consistent code style regardless of user preferences, IDE settings, etc."
+            tags.set(["formatter", "java", "check"])
         }
     }
+    website.set("https://github.com/tmzk1005/formatter")
+    vcsUrl.set("https://github.com/tmzk1005/formatter")
 }
 
 configurations.configureEach {
@@ -94,7 +101,7 @@ def applySelf(String mainClass) {
     formatter {
         importOrder = ["java", "javax", "", "#"]
         fmtOptions = [
-                "lineSplit": "200",
+                "lineSplit"      : "200",
                 "tabulation.size": "4",
         ]
     }
@@ -109,7 +116,6 @@ def applySelf(String mainClass) {
 }
 
 applySelf("zk.gradle.plugin.formatter.JavaFormatterPlugin")
-
 
 
 tasks.named("clean") {

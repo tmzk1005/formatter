@@ -1,7 +1,5 @@
 # formatter-gradle-plugin
 
-[![Apache License][license_img]][license_link]
-
 This project provides a mechanism to automatically (re)format your [Gradle](https://gradle.org/)
 project during a Gradle build, or to verify its formatting, so that your project
 can converge on consistent code style regardless of user preferences, IDE

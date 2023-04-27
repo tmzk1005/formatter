@@ -90,7 +90,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
 
     private void registerTaskFormat(Project project) {
         project.task(TASK_FORMAT)
-                .dependsOn(TASK_CREATE_RULES_FILE)
+                .dependsOn(":" + TASK_CREATE_RULES_FILE)
                 .doLast(task -> {
                     loadConf();
                     doFormat(project.getProjectDir().toPath(), false, task);
@@ -99,7 +99,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
 
     private void registerTaskCheck(Project project) {
         project.task(TASK_CHECK)
-                .dependsOn(TASK_CREATE_RULES_FILE)
+                .dependsOn(":" + TASK_CREATE_RULES_FILE)
                 .doLast(task -> {
                     loadConf();
                     doFormat(project.getProjectDir().toPath(), true, task);
@@ -108,8 +108,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
 
     private void registerTaskCreateRuleFile(Project project) {
         Project rootProject = project.getRootProject();
-        Set<Task> tasksByName = rootProject
-                .getTasksByName(TASK_CREATE_RULES_FILE, false);
+        Set<Task> tasksByName = rootProject.getTasksByName(TASK_CREATE_RULES_FILE, false);
         if (tasksByName.isEmpty()) {
             rootProject.task(TASK_CREATE_RULES_FILE).doLast(task -> {
                 loadConf();

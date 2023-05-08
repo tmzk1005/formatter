@@ -20,7 +20,7 @@ To use this plugin, include the following in your `build.gradle` :
 
 ```groovy
 plugins {
-    id "zk.gradle.plugin.java-formatter" version "x.y.z"
+    id "io.github.tmzk1005.java-formatter" version "x.y.z"
 }
 ```
 
@@ -28,11 +28,11 @@ This plugin will add 3 tasks to your project, with name prefix 'fmt', as shown b
 
 ### fmtCheck
 
-Check the Java source files format, and show not pretty formatted file names.
+Check Java source code files format, and show not pretty formatted file names.
 
 ### fmtFormat
 
-Check the Java source files format, and auto format not pretty formatted files,
+Check Java source code files format, and auto format not pretty formatted files,
 also show changed file names.
 
 ### fmtCreateRulesFile
@@ -53,7 +53,7 @@ formatter {
 
     importOrder = ["java", "javax", "org.springframework", "", "#"]
 
-    fmtOptions [
+    fmtOptions = [
             "lineSplit": "160",
             "tabulation.size": "4",
     ]
@@ -66,7 +66,7 @@ formatter {
 `qaDir` is the directory to put generated `java-format.xml` and `java.import` by
 task `fmtCreateRulesFile`, should be an relative path string to your root project.
 
-default values is `qa/format`
+default value is `qa/format`
 
 ### importOrder
 
@@ -77,7 +77,7 @@ default values is `["java", "javax", "", "#"]`
 
 ### fmtOptions
 
-`fmtOptions` is string to string Map (some values is number type, but still config as string). 
+`fmtOptions` is string to string Map (some values is not string type, but still config as string). 
 There are hundreds of options, run gradle task `fmtCreateRulesFile` to see
 all the options and value in the generated xml file `java-format.xml`, 
 option name is the setting id without prefix "org.eclipse.jdt.core.formatter.".
@@ -100,7 +100,7 @@ After build locally, include the following in your `build.gradle`:
 
 ```groovy
 plugins {
-    id "zk.gradle.plugin.java-formatter" version "x.y.z"
+    id "io.github.tmzk1005.java-formatter" version "x.y.z"
 }
 
 repositories {

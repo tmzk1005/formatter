@@ -29,7 +29,7 @@ repositories {
     gradlePluginPortal()
 }
 
-group = "zk.gradle.plugin"
+group = "io.github.tmzk1005"
 version = "${projectVersion}"
 
 java {
@@ -49,11 +49,13 @@ pmd {
     ruleSetFiles = files(rootProject.file('qa/pmd/pmd-java-rules.xml'))
 }
 
+def pluginImplMainClass = "${group}.formatter.JavaFormatterPlugin"
+
 gradlePlugin {
     plugins {
         formatterPlugin {
             id = "${group}.java-formatter"
-            implementationClass = 'zk.gradle.plugin.formatter.JavaFormatterPlugin'
+            implementationClass = pluginImplMainClass
             displayName = "java-code-formatter-gradle-plugin"
             description = "This plugin provides a mechanism to automatically (re)format your Gradle project " +
                     "during a Gradle build, or to verify its formatting, so that your project can converge " +
@@ -115,8 +117,7 @@ def applySelf(String mainClass) {
     }
 }
 
-applySelf("zk.gradle.plugin.formatter.JavaFormatterPlugin")
-
+applySelf(pluginImplMainClass)
 
 tasks.named("clean") {
     doLast {

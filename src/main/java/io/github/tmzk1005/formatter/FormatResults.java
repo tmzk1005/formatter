@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zk.gradle.plugin.formatter;
+package io.github.tmzk1005.formatter;
 
 import java.util.Map;
 import java.util.Set;

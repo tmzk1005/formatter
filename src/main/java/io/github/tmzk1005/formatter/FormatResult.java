@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zk.gradle.plugin.formatter;
+package io.github.tmzk1005.formatter;
 
 /**
  * file format result type

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zk.gradle.plugin.formatter;
+package io.github.tmzk1005.formatter;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -94,7 +94,8 @@ public class JavaFormatterPlugin implements Plugin<Project> {
                 .doLast(task -> {
                     loadConf();
                     doFormat(project.getProjectDir().toPath(), false, task);
-                });
+                })
+                .setDescription("Check Java source code files format, and auto format not pretty formatted files, also show changed file names.");
     }
 
     private void registerTaskCheck(Project project) {
@@ -103,7 +104,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
                 .doLast(task -> {
                     loadConf();
                     doFormat(project.getProjectDir().toPath(), true, task);
-                });
+                }).setDescription("Check Java source code files format, and show not pretty formatted file names.");
     }
 
     private void registerTaskCreateRuleFile(Project project) {
@@ -115,7 +116,7 @@ public class JavaFormatterPlugin implements Plugin<Project> {
                 String qaDir = formatterConf.getQaDir().getOrElse(DEFAULT_QA_DIR);
                 Path qaPath = rootProject.getProjectDir().toPath().resolve(qaDir);
                 createRulesFile(task, qaPath);
-            });
+            }).setDescription("Generate java-format.xml and java.importorder file.");
         }
     }
 

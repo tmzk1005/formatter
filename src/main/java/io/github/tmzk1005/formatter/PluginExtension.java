@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zk.gradle.plugin.formatter;
+package io.github.tmzk1005.formatter;
 
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.MapProperty;
@@ -41,7 +41,7 @@ public interface PluginExtension {
 
     /**
      * get java code format options
-     * 
+     *
      * @return java code format options, as string to string map
      */
     MapProperty<String, String> getFmtOptions();

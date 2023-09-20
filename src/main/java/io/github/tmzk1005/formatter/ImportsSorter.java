@@ -112,18 +112,12 @@ public class ImportsSorter {
         while (formattedCode.charAt(importPartEnd) != '\n') {
             ++importPartEnd;
         }
-        // 最后一个字符是换行，不要
-        --importPartEnd;
-        String importPart = formattedCode
-                .substring(importPartStart, importPartEnd);
-        String codeBeforeImport = importPartStart == 0 ? ""
-                : formattedCode.substring(0, importPartStart);
-        String codeAfterImport = formattedCode
-                .substring(importPartEnd);
-        String orderedImportLines = new SortContext(importPart)
-                .sort();
-        return codeBeforeImport + orderedImportLines
-                + codeAfterImport;
+
+        String importPart = formattedCode.substring(importPartStart, importPartEnd);
+        String codeBeforeImport = importPartStart == 0 ? "" : formattedCode.substring(0, importPartStart);
+        String codeAfterImport = formattedCode.substring(importPartEnd);
+        String orderedImportLines = new SortContext(importPart).sort();
+        return codeBeforeImport + orderedImportLines + codeAfterImport;
     }
 
     class SortContext {
@@ -145,7 +139,7 @@ public class ImportsSorter {
             );
             this.groups = new HashMap<>(importOrder.size());
             for (String key : importOrder) {
-                if (key.equals("")) {
+                if (key.isEmpty()) {
                     groups.put(KEY_OTHER, new ArrayList<>());
                 } else if (key.equals("#")) {
                     groups.put(KEY_STATIC, new ArrayList<>());
@@ -194,7 +188,7 @@ public class ImportsSorter {
             StringBuilder sb = new StringBuilder();
             for (String key : importOrder) {
                 List<String> group;
-                if (key.equals("")) {
+                if (key.isEmpty()) {
                     group = groups.get(KEY_OTHER);
                 } else if (key.equals("#")) {
                     group = groups.get(KEY_STATIC);
